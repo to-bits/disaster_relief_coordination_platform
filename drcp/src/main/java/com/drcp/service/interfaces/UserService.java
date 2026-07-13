@@ -1,16 +1,14 @@
 package com.drcp.service.interfaces;
 
-import com.drcp.dto.RegisterRequest;
-import com.drcp.entity.User;
 
-import java.util.List;
-import java.util.Optional;
+import com.drcp.dto.request.RegisterRequest;
+import com.drcp.dto.response.UserResponse;
+
 
 public interface UserService {
 
-    User register(RegisterRequest request);
 
-    List<User> getAllUsers();
+    UserResponse registerUser(RegisterRequest request);
 
-    Optional<User> getUserByEmail(String email);
+
 }

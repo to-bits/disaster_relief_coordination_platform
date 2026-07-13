@@ -24,12 +24,16 @@ public class CustomUserDetailsService
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature-backend
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
 
+<<<<<<< HEAD
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(
@@ -53,6 +57,20 @@ public class CustomUserDetailsService
                 )
 
                 .build();
+=======
+        User user =
+                userRepository
+                        .findByEmail(email)
+                        .orElseThrow(
+                                () ->
+                                        new UsernameNotFoundException(
+                                                "User not found"
+                                        )
+                        );
+
+
+        return new CustomUserDetails(user);
+>>>>>>> feature-backend
 
     }
 
