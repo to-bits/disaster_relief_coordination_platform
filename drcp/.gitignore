@@ -1,37 +1,42 @@
-drcp/HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-drcp/DEVELOPMENT_REVIEW.md
-drcp/PROJECT_STRUCTURE.md
+# --- Project Specific Files to Ignore ---
+HELP.md
+DEVELOPMENT_REVIEW.md
+PROJECT_STRUCTURE.md
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
+# --- IDE & Editor Settings ---
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# VS Code
+.vscode/
+
+# STS / Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# --- Build Directories ---
+target/
 build/
+
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-#itellij
-.idea/
+# --- Maven Wrapper ---
+.mvn/wrapper/maven-wrapper.jar
