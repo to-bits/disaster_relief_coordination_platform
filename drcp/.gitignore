@@ -1,27 +1,29 @@
-drcp/HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Project specific files
 drcp/DEVELOPMENT_REVIEW.md
 drcp/PROJECT_STRUCTURE.md
+drcp/HELP.md
 
-### STS ###
-.apt_generated
+# Maven/Build directories
+target/
+**/target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE files (IntelliJ, VS Code, STS, etc.)
+.idea/
+.vscode/
+.settings/
 .classpath
-.factorypath
 .project
-.settings
+.factorypath
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
+.apt_generated
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -31,7 +33,5 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-#itellij
-.idea/
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
