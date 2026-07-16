@@ -3,6 +3,8 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+drcp/DEVELOPMENT_REVIEW.md
+drcp/PROJECT_STRUCTURE.md
 
 ### STS ###
 .apt_generated
