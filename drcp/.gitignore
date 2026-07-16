@@ -1,10 +1,10 @@
-HELP.md
+drcp/HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-DEVELOPMENT_REVIEW.md
-PROJECT_STRUCTURE.md
+drcp/DEVELOPMENT_REVIEW.md
+drcp/PROJECT_STRUCTURE.md
 
 ### STS ###
 .apt_generated
