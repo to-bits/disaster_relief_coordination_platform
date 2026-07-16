@@ -1,42 +1,37 @@
-# --- Project Specific Files to Ignore ---
 HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 DEVELOPMENT_REVIEW.md
 PROJECT_STRUCTURE.md
 
-# --- IDE & Editor Settings ---
-# IntelliJ IDEA
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# VS Code
-.vscode/
-
-# STS / Eclipse
+### STS ###
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings/
+.settings
 .springBeans
 .sts4-cache
 
-# NetBeans
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-
-# --- Build Directories ---
-target/
 build/
-
-!**/src/main/**/target/
-!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# --- Maven Wrapper ---
-.mvn/wrapper/maven-wrapper.jar
+### VS Code ###
+.vscode/
+#itellij
+.idea/
