@@ -5,6 +5,8 @@ import com.drcp.dto.request.RegisterRequest;
 import com.drcp.dto.response.UserResponse;
 import com.drcp.entity.Role;
 import com.drcp.entity.User;
+import com.drcp.exception.DuplicateResourceException;
+import com.drcp.exception.ResourceNotFoundException;
 import com.drcp.repository.RoleRepository;
 import com.drcp.repository.UserRepository;
 import com.drcp.service.interfaces.UserService;
@@ -45,9 +47,7 @@ public class UserServiceImpl implements UserService {
 
         if(userRepository.existsByEmail(request.getEmail())){
 
-            throw new RuntimeException(
-                    "Email already exists"
-            );
+            throw new DuplicateResourceException("Email already exists");
 
         }
 
@@ -59,10 +59,9 @@ public class UserServiceImpl implements UserService {
                 userRepository.existsByPhone(request.getPhone())){
 
 
-            throw new RuntimeException(
+            throw new DuplicateResourceException(
                     "Phone already exists"
             );
-
         }
 
 
@@ -73,7 +72,7 @@ public class UserServiceImpl implements UserService {
         Role citizenRole = roleRepository
                 .findByName("ROLE_CITIZEN")
                 .orElseThrow(
-                        () -> new RuntimeException(
+                        () -> new ResourceNotFoundException(
                                 "Default role not found"
                         )
                 );
