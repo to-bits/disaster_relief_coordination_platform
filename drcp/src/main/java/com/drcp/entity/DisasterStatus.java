@@ -1,4 +1,9 @@
 package com.drcp.entity;
 
-public class DisasterStatus {
+public enum DisasterStatus {
+
+    ACTIVE,
+    ONGOING,
+    RESOLVED,
+    CANCELLED
 }
