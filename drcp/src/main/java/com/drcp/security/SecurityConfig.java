@@ -1,25 +1,14 @@
 package com.drcp.security;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-
 import org.springframework.security.web.SecurityFilterChain;
-
-
 
 @Configuration
 @RequiredArgsConstructor
@@ -27,6 +16,8 @@ public class SecurityConfig {
 
 
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -37,13 +28,10 @@ public class SecurityConfig {
 
 
 
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
-
+            HttpSecurity http
+    ) throws Exception {
 
 
         http
@@ -53,60 +41,53 @@ public class SecurityConfig {
                 )
 
 
-                .authorizeHttpRequests(auth ->
-                        auth
-
-                                .requestMatchers(
-                                        "/",
-                                        "/login",
-                                        "/register",
-                                        "/api/auth/register",
-                                        "/css/**",
-                                        "/js/**"
-                                )
-                                .permitAll()
-
-                                .requestMatchers("/admin/**")
-                                .hasRole("ADMIN")
+                .authorizeHttpRequests(auth -> auth
 
 
-                                .requestMatchers("/citizen/**")
-                                .hasRole("CITIZEN")
+                        .requestMatchers(
+                                "/",
+                                "/login",
+                                "/api/auth/**",
+                                "/register",
+                                "/css/**",
+                                "/js/**"
+                        )
+                        .permitAll()
 
 
-                                .requestMatchers("/volunteer/**")
-                                .hasRole("VOLUNTEER")
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
 
 
-                                .requestMatchers("/donor/**")
-                                .hasRole("DONOR")
+                        .requestMatchers("/citizen/**")
+                        .hasRole("CITIZEN")
 
 
-                                .anyRequest()
-                                .authenticated()
+                        .requestMatchers("/volunteer/**")
+                        .hasRole("VOLUNTEER")
+
+
+                        .requestMatchers("/donor/**")
+                        .hasRole("DONOR")
+
+
+                        .anyRequest()
+                        .authenticated()
 
                 )
-
 
 
                 .formLogin(form ->
                         form
-
                                 .loginPage("/login")
-
                                 .successHandler(customAuthenticationSuccessHandler)
-
                                 .permitAll()
-
                 )
-
 
 
                 .logout(logout ->
                         logout
-
                                 .logoutSuccessUrl("/")
-
                 );
 
 
@@ -117,17 +98,12 @@ public class SecurityConfig {
 
 
 
-
-
-
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration
     ) throws Exception {
 
-
-        return configuration
-                .getAuthenticationManager();
+        return configuration.getAuthenticationManager();
 
     }
 
