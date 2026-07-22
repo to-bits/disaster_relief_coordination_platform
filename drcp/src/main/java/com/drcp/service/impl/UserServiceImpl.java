@@ -11,17 +11,22 @@ import com.drcp.exception.DuplicateResourceException;
 import com.drcp.exception.ResourceNotFoundException;
 import com.drcp.repository.RoleRepository;
 import com.drcp.repository.UserRepository;
+import com.drcp.security.CustomUserDetails;
 import com.drcp.service.interfaces.UserService;
 
 
 import lombok.RequiredArgsConstructor;
 
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -37,6 +42,8 @@ public class UserServiceImpl implements UserService {
 
 
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
 
 
 
@@ -119,14 +126,45 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
     @Override
     public LoginResponse loginUser(LoginRequest request) {
-        return null;
+
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                request.getEmail(),
+                                request.getPassword()
+                        )
+                );
+
+
+        CustomUserDetails userDetails =
+                (CustomUserDetails) authentication.getPrincipal();
+
+
+
+        return LoginResponse.builder()
+
+                .id(userDetails.getId())
+
+                .firstName(userDetails.getFirstName())
+
+                .lastName(userDetails.getLastName())
+
+                .email(userDetails.getUsername())
+
+                .roles(userDetails.getRoles())
+
+                .message("Login successful")
+
+                .build();
+
     }
 
 
-    private UserResponse mapToResponse(User user){
-
+    private UserResponse mapToResponse(User user) {
 
         return UserResponse.builder()
 
@@ -143,16 +181,11 @@ public class UserServiceImpl implements UserService {
                 .roles(
                         user.getRoles()
                                 .stream()
-                                .map(Role::getName)
-                                .collect(
-                                        java.util.stream.Collectors.toSet()
-                                )
+                                .map(role -> role.getName())
+                                .collect(Collectors.toSet())
                 )
 
                 .build();
-
-
     }
-
 
 }
