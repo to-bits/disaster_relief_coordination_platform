@@ -1,7 +1,9 @@
 package com.drcp.controller.auth;
 
 
+import com.drcp.dto.request.LoginRequest;
 import com.drcp.dto.request.RegisterRequest;
+import com.drcp.dto.response.LoginResponse;
 import com.drcp.dto.response.UserResponse;
 import com.drcp.payload.ApiResponse;
 import com.drcp.service.interfaces.UserService;
@@ -46,6 +48,22 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(apiResponse);
+    }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        LoginResponse response = userService.loginUser(request);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Login successful",
+                        response
+                )
+        );
     }
 
 
