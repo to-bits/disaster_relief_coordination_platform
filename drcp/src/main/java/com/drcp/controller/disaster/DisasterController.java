@@ -20,77 +20,49 @@ public class DisasterController {
     private final DisasterService disasterService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<DisasterResponse>> createDisaster(
+    public ResponseEntity<ApiResponse<DisasterResponse>> create(
             @Valid @RequestBody DisasterRequest request) {
 
         DisasterResponse response = disasterService.createDisaster(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(
-                        true,
-                        "Disaster created successfully",
-                        response
-                ));
+                .body(new ApiResponse<>(true, "Disaster created successfully", response));
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<DisasterResponse>>> getAllDisasters() {
-
-        List<DisasterResponse> response = disasterService.getAllDisasters();
+    public ResponseEntity<ApiResponse<List<DisasterResponse>>> getAll() {
 
         return ResponseEntity.ok(
-                new ApiResponse<>(
-                        true,
-                        "Disasters fetched successfully",
-                        response
-                )
+                new ApiResponse<>(true, "Success", disasterService.getAllDisasters())
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<DisasterResponse>> getDisasterById(
-            @PathVariable Long id) {
-
-        DisasterResponse response = disasterService.getDisasterById(id);
+    public ResponseEntity<ApiResponse<DisasterResponse>> getById(@PathVariable Long id) {
 
         return ResponseEntity.ok(
-                new ApiResponse<>(
-                        true,
-                        "Disaster fetched successfully",
-                        response
-                )
+                new ApiResponse<>(true, "Success", disasterService.getDisasterById(id))
         );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<DisasterResponse>> updateDisaster(
+    public ResponseEntity<ApiResponse<DisasterResponse>> update(
             @PathVariable Long id,
             @Valid @RequestBody DisasterRequest request) {
 
-        DisasterResponse response =
-                disasterService.updateDisaster(id, request);
-
         return ResponseEntity.ok(
-                new ApiResponse<>(
-                        true,
-                        "Disaster updated successfully",
-                        response
-                )
+                new ApiResponse<>(true, "Updated successfully",
+                        disasterService.updateDisaster(id, request))
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> deleteDisaster(
-            @PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
 
         disasterService.deleteDisaster(id);
 
         return ResponseEntity.ok(
-                new ApiResponse<>(
-                        true,
-                        "Disaster deleted successfully",
-                        "Deleted"
-                )
+                new ApiResponse<>(true, "Deleted successfully", "Success")
         );
     }
 

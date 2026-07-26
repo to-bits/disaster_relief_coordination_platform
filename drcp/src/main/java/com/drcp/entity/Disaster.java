@@ -1,9 +1,11 @@
 package com.drcp.entity;
 
+import com.drcp.entity.DisasterStatus;
+import com.drcp.entity.DisasterType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +21,7 @@ public class Disaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String title;
 
@@ -27,33 +30,36 @@ public class Disaster {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private DisasterType disasterType;
+    private DisasterType type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private DisasterSeverity severity;
+    @Builder.Default
+    private DisasterStatus status = DisasterStatus.REPORTED;
 
     @Column(nullable = false)
-    private String location;
+    private String district;
+
+    private String upazila;
 
     private Double latitude;
 
     private Double longitude;
 
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DisasterStatus status;
+    @Builder.Default
+    private Integer affectedPeople = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    @JoinColumn(name = "reported_by")
+    private User reportedBy;
 
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt;
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

@@ -3,13 +3,11 @@ package com.drcp.service.impl;
 import com.drcp.dto.request.DisasterRequest;
 import com.drcp.dto.response.DisasterResponse;
 import com.drcp.entity.Disaster;
-import com.drcp.exception.ResourceNotFoundException;
 import com.drcp.repository.DisasterRepository;
 import com.drcp.service.interfaces.DisasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,20 +23,15 @@ public class DisasterServiceImpl implements DisasterService {
         Disaster disaster = Disaster.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .disasterType(request.getDisasterType())
-                .severity(request.getSeverity())
-                .location(request.getLocation())
+                .type(request.getType())
+                .district(request.getDistrict())
+                .upazila(request.getUpazila())
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .status(request.getStatus())
-                .createdAt(LocalDateTime.now())
+                .affectedPeople(request.getAffectedPeople())
                 .build();
 
-        Disaster savedDisaster = disasterRepository.save(disaster);
-
-        return mapToResponse(savedDisaster);
+        return mapToResponse(disasterRepository.save(disaster));
     }
 
     @Override
@@ -48,50 +41,43 @@ public class DisasterServiceImpl implements DisasterService {
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public DisasterResponse getDisasterById(Long id) {
 
         Disaster disaster = disasterRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Disaster not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Disaster not found"));
 
         return mapToResponse(disaster);
+
     }
 
     @Override
     public DisasterResponse updateDisaster(Long id, DisasterRequest request) {
 
         Disaster disaster = disasterRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Disaster not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Disaster not found"));
 
         disaster.setTitle(request.getTitle());
         disaster.setDescription(request.getDescription());
-        disaster.setDisasterType(request.getDisasterType());
-        disaster.setSeverity(request.getSeverity());
-        disaster.setLocation(request.getLocation());
+        disaster.setType(request.getType());
+        disaster.setDistrict(request.getDistrict());
+        disaster.setUpazila(request.getUpazila());
         disaster.setLatitude(request.getLatitude());
         disaster.setLongitude(request.getLongitude());
-        disaster.setStartDate(request.getStartDate());
-        disaster.setEndDate(request.getEndDate());
-        disaster.setStatus(request.getStatus());
-        disaster.setUpdatedAt(LocalDateTime.now());
+        disaster.setAffectedPeople(request.getAffectedPeople());
 
-        Disaster updatedDisaster = disasterRepository.save(disaster);
+        return mapToResponse(disasterRepository.save(disaster));
 
-        return mapToResponse(updatedDisaster);
     }
 
     @Override
     public void deleteDisaster(Long id) {
 
-        Disaster disaster = disasterRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Disaster not found with id: " + id));
+        disasterRepository.deleteById(id);
 
-        disasterRepository.delete(disaster);
     }
 
     private DisasterResponse mapToResponse(Disaster disaster) {
@@ -100,14 +86,20 @@ public class DisasterServiceImpl implements DisasterService {
                 .id(disaster.getId())
                 .title(disaster.getTitle())
                 .description(disaster.getDescription())
-                .disasterType(disaster.getDisasterType())
-                .severity(disaster.getSeverity())
-                .location(disaster.getLocation())
+                .type(disaster.getType())
+                .status(disaster.getStatus())
+                .district(disaster.getDistrict())
+                .upazila(disaster.getUpazila())
                 .latitude(disaster.getLatitude())
                 .longitude(disaster.getLongitude())
-                .startDate(disaster.getStartDate())
-                .endDate(disaster.getEndDate())
-                .status(disaster.getStatus())
+                .affectedPeople(disaster.getAffectedPeople())
+                .reportedBy(
+                        disaster.getReportedBy() != null
+                                ? disaster.getReportedBy().getFirstName() + " " + disaster.getReportedBy().getLastName()
+                                : null
+                )
+                .createdAt(disaster.getCreatedAt())
                 .build();
+
     }
 }

@@ -2,8 +2,10 @@ package com.drcp.entity;
 
 public enum DisasterStatus {
 
+
+    REPORTED,
+    VERIFIED,
     ACTIVE,
-    ONGOING,
     RESOLVED,
-    CANCELLED
+    CLOSED
 }

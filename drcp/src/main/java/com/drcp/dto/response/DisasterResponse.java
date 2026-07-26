@@ -1,14 +1,15 @@
 package com.drcp.dto.response;
 
-import com.drcp.entity.DisasterSeverity;
 import com.drcp.entity.DisasterStatus;
 import com.drcp.entity.DisasterType;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class DisasterResponse {
 
@@ -18,20 +19,22 @@ public class DisasterResponse {
 
     private String description;
 
-    private DisasterType disasterType;
+    private DisasterType type;
 
-    private DisasterSeverity severity;
+    private DisasterStatus status;
 
-    private String location;
+    private String district;
+
+    private String upazila;
 
     private Double latitude;
 
     private Double longitude;
 
-    private LocalDate startDate;
+    private Integer affectedPeople;
 
-    private LocalDate endDate;
+    private String reportedBy;
 
-    private DisasterStatus status;
+    private LocalDateTime createdAt;
 
 }

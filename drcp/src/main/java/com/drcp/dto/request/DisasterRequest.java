@@ -1,40 +1,34 @@
 package com.drcp.dto.request;
 
-import com.drcp.entity.DisasterSeverity;
-import com.drcp.entity.DisasterStatus;
 import com.drcp.entity.DisasterType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
-import java.time.LocalDate;
-
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DisasterRequest {
 
-    @NotBlank(message = "Title is required")
+    @NotBlank
     private String title;
 
     private String description;
 
-    @NotNull(message = "Disaster type is required")
-    private DisasterType disasterType;
+    @NotNull
+    private DisasterType type;
 
-    @NotNull(message = "Severity is required")
-    private DisasterSeverity severity;
+    @NotBlank
+    private String district;
 
-    @NotBlank(message = "Location is required")
-    private String location;
+    private String upazila;
 
     private Double latitude;
 
     private Double longitude;
 
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-
-    @NotNull(message = "Status is required")
-    private DisasterStatus status;
+    private Integer affectedPeople;
 
 }
