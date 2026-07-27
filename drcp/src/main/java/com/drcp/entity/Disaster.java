@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "disasters")
@@ -55,6 +57,18 @@ public class Disaster {
 
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
+
+    @OneToMany(
+            mappedBy = "disaster",
+            cascade = CascadeType.ALL
+    )
+    @Builder.Default
+    private java.util.List<ReliefRequest> reliefRequests =
+            new java.util.ArrayList<>();
+
+//    @Builder.Default
+//    private List<ReliefRequest> reliefRequests = new ArrayList<>();
 
     private LocalDateTime updatedAt;
 

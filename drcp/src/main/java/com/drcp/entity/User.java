@@ -79,6 +79,12 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
+    @OneToMany(
+            mappedBy = "requestedBy",
+            cascade = CascadeType.ALL
+    )
+    @Builder.Default
+    private Set<ReliefRequest> reliefRequests = new HashSet<>();
 
     @Builder.Default
     private Boolean enabled = true;
