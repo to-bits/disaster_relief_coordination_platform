@@ -1,45 +1,39 @@
-package com.drcp.dto.response;
+package com.drcp.dto.request;
 
 import com.drcp.entity.enums.PriorityLevel;
-import com.drcp.entity.enums.ReliefRequestStatus;
 import com.drcp.entity.enums.ReliefType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReliefRequestResponse {
+public class ReliefRequestRequest {
 
-    private Long id;
-
+    @NotBlank
     private String title;
 
     private String description;
 
+    @NotNull
     private ReliefType reliefType;
 
-    private PriorityLevel priority;
+    @Builder.Default
+    private PriorityLevel priority = PriorityLevel.MEDIUM;
 
-    private ReliefRequestStatus status;
-
+    @NotNull
     private Integer quantity;
 
+    @NotBlank
     private String contactPhone;
 
+    @NotBlank
     private String deliveryAddress;
 
+    @NotNull
     private Long disasterId;
-
-    private String disasterTitle;
-
-    private Long requestedById;
-
-    private String requestedByName;
-
-    private LocalDateTime createdAt;
 
 }
