@@ -3,8 +3,6 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-DEVELOPMENT_REVIEW.md
-PROJECT_STRUCTURE.md
 
 ### STS ###
 .apt_generated
@@ -15,11 +13,15 @@ PROJECT_STRUCTURE.md
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
+
+# Project docs (যেগুলো ignore করতে চান)
+DEVELOPMENT_REVIEW.md
+PROJECT_STRUCTURE.md
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,5 +35,4 @@ build/
 
 ### VS Code ###
 .vscode/
-#itellij
-.idea/
+
