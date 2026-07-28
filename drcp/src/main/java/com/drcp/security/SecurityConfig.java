@@ -65,7 +65,8 @@ public class SecurityConfig {
                                 "/login",
                                 "/api/auth/**",
                                 "/api/disasters/**",
-                                "/api/relief-requests",
+                                "/api/relief-requests/**",
+                                "/api/volunteers/**",
                                 "/register",
                                 "/css/**",
                                 "/js/**"
