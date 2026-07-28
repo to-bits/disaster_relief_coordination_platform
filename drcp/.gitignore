@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 
-# Project docs (যেগুলো ignore করতে চান)
+# Project docs
 DEVELOPMENT_REVIEW.md
 PROJECT_STRUCTURE.md
 
