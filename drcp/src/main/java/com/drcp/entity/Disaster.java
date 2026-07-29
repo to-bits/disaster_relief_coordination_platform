@@ -1,14 +1,12 @@
 package com.drcp.entity;
 
-import com.drcp.entity.DisasterStatus;
-import com.drcp.entity.DisasterType;
+import com.drcp.entity.enums.DisasterStatus;
+import com.drcp.entity.enums.DisasterType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "disasters")

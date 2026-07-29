@@ -1,6 +1,6 @@
 package com.drcp.dto.request;
 
-import com.drcp.entity.DisasterType;
+import com.drcp.entity.enums.DisasterType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

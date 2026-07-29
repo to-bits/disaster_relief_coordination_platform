@@ -1,8 +1,8 @@
 package com.drcp.repository;
 
 import com.drcp.entity.Disaster;
-import com.drcp.entity.DisasterStatus;
-import com.drcp.entity.DisasterType;
+import com.drcp.entity.enums.DisasterStatus;
+import com.drcp.entity.enums.DisasterType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

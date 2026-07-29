@@ -1,7 +1,7 @@
 package com.drcp.dto.response;
 
-import com.drcp.entity.DisasterStatus;
-import com.drcp.entity.DisasterType;
+import com.drcp.entity.enums.DisasterStatus;
+import com.drcp.entity.enums.DisasterType;
 import lombok.*;
 
 import java.time.LocalDateTime;

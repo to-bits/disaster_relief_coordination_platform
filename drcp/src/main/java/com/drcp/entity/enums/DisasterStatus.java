@@ -1,4 +1,4 @@
-package com.drcp.entity;
+package com.drcp.entity.enums;
 
 public enum DisasterStatus {
 
