@@ -69,6 +69,7 @@ public class SecurityConfig {
                                 "/api/volunteers/**",
                                 "/api/donations/**",
                                 "/api/resources/**",
+                                "/api/distributions/**",
                                 "/register",
                                 "/css/**",
                                 "/js/**"
