@@ -15,4 +15,6 @@ public interface DisasterRepository extends JpaRepository<Disaster, Long> {
 
     List<Disaster> findByDistrictIgnoreCase(String district);
 
+    long countByStatus(DisasterStatus status);
+
 }

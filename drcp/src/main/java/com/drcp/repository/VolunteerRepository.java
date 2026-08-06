@@ -15,4 +15,8 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
     List<Volunteer> findByAvailableTrue();
 
+    long countByStatus(VolunteerStatus status);
+
+    long countByAvailableTrue();
+
 }

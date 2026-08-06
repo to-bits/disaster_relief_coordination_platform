@@ -19,25 +19,34 @@ public class Donation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Donor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donor_id", nullable = false)
     private User donor;
 
+    // Disaster
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "disaster_id", nullable = false)
     private Disaster disaster;
 
-    @Column(nullable = false)
-    private String itemName;
+    // Resource Relation (NEW)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resource_id", nullable = false)
+    private Resource resource;
 
+    // Donated Quantity
     @Column(nullable = false)
     private Integer quantity;
+
+    // Estimated Monetary Value
+    @Column(nullable = false)
+    private Double estimatedValue;
 
     private String remarks;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     @Column(nullable = false)
+    @Builder.Default
     private DonationStatus status = DonationStatus.PENDING;
 
     @Builder.Default
@@ -49,5 +58,4 @@ public class Donation {
     public void updateTimestamp() {
         updatedAt = LocalDateTime.now();
     }
-
 }

@@ -13,19 +13,19 @@ public class DonationResponse {
     private Long id;
 
     private Long donorId;
-
     private String donorName;
 
     private Long disasterId;
-
     private String disasterTitle;
 
-    private String itemName;
+    private Long resourceId;
+    private String resourceName;
 
     private Integer quantity;
 
-    private String remarks;
+    private Double estimatedValue;
 
     private DonationStatus status;
 
+    private String remarks;
 }

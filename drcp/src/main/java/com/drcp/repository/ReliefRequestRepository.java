@@ -20,4 +20,6 @@ public interface ReliefRequestRepository extends JpaRepository<ReliefRequest, Lo
 
     List<ReliefRequest> findByReliefType(ReliefType reliefType);
 
+    long countByStatus(ReliefRequestStatus status);
+
 }

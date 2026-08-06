@@ -1,6 +1,7 @@
 package com.drcp.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.drcp.entity.enums.DonationStatus;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -11,15 +12,25 @@ import lombok.*;
 @Builder
 public class DonationRequest {
 
-    @NotBlank
-    private String itemName;
-
     @NotNull
-    private Integer quantity;
-
-    private String remarks;
+    private Long donorId;
 
     @NotNull
     private Long disasterId;
 
+    @NotNull
+    private Long resourceId;
+
+    @NotNull
+    @Min(1)
+    private Integer quantity;
+
+    @NotNull
+    @Min(0)
+    private Double estimatedValue;
+
+    private String remarks;
+
+    @Builder.Default
+    private DonationStatus status = DonationStatus.PENDING;
 }
