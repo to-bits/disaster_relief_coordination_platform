@@ -15,4 +15,17 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     List<Donation> findByDisasterId(Long disasterId);
 
+    @Query("""
+    SELECT COALESCE(SUM(d.quantity),0)
+    FROM Donation d
+    """)
+
+    Integer getTotalDonationQuantity();
+
+    @Query("""
+    SELECT COALESCE(SUM(d.estimatedValue),0)
+    FROM Donation d
+    """)
+    Double getTotalDonationValue();
+
 }

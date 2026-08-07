@@ -9,11 +9,11 @@ import lombok.*;
 @Builder
 public class DashboardResponse {
 
-    /* ---------------- Users ---------------- */
+    /* ---------------- USERS ---------------- */
 
     private Long totalUsers;
 
-    /* ---------------- Disaster ---------------- */
+    /* ---------------- DISASTERS ---------------- */
 
     private Long totalDisasters;
 
@@ -21,17 +21,17 @@ public class DashboardResponse {
 
     private Long completedDisasters;
 
-    /* ---------------- Relief Requests ---------------- */
+    /* ---------------- RELIEF REQUESTS ---------------- */
 
     private Long totalReliefRequests;
 
-    private Long pendingReliefRequests;
+    private Long pendingRequests;
 
-    private Long approvedReliefRequests;
+    private Long approvedRequests;
 
-    private Long completedReliefRequests;
+    private Long completedRequests;
 
-    /* ---------------- Volunteers ---------------- */
+    /* ---------------- VOLUNTEERS ---------------- */
 
     private Long totalVolunteers;
 
@@ -39,19 +39,21 @@ public class DashboardResponse {
 
     private Long busyVolunteers;
 
-    /* ---------------- Donations ---------------- */
+    /* ---------------- DONATIONS ---------------- */
 
     private Long totalDonations;
 
-    private Double totalDonationAmount;
+    private Integer totalDonationQuantity;
 
-    /* ---------------- Resources ---------------- */
+    private Double totalDonationValue;
+
+    /* ---------------- RESOURCES ---------------- */
 
     private Long totalResources;
 
-    private Integer totalAvailableResourceQuantity;
+    private Integer totalAvailableResources;
 
-    /* ---------------- Distribution ---------------- */
+    /* ---------------- DISTRIBUTIONS ---------------- */
 
     private Long totalDistributions;
 
