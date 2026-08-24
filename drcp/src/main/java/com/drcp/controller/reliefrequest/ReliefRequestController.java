@@ -1,4 +1,4 @@
-package com.drcp.controller.ReliefRequest;
+package com.drcp.controller.reliefrequest;
 
 import com.drcp.dto.request.ReliefRequestRequest;
 import com.drcp.dto.response.ReliefRequestResponse;

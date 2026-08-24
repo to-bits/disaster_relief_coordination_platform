@@ -1,4 +1,4 @@
-package com.drcp.controller.Resource;
+package com.drcp.controller.resource;
 
 import com.drcp.dto.request.ResourceRequest;
 import com.drcp.dto.response.ResourceResponse;

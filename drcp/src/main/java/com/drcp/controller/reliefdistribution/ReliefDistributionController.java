@@ -1,4 +1,4 @@
-package com.drcp.controller.ReliefDistribution;
+package com.drcp.controller.reliefdistribution;
 
 import com.drcp.dto.request.ReliefDistributionRequest;
 import com.drcp.dto.response.ReliefDistributionResponse;

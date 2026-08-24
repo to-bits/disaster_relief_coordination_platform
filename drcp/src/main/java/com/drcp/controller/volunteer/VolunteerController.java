@@ -1,4 +1,4 @@
-package com.drcp.controller.Volunteer;
+package com.drcp.controller.volunteer;
 
 import com.drcp.dto.request.VolunteerRequest;
 import com.drcp.dto.response.VolunteerResponse;

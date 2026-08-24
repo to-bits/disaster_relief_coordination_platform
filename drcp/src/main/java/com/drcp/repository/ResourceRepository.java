@@ -14,9 +14,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
     List<Resource> findByQuantityGreaterThan(Integer quantity);
 
 
-    @Query("""
-    SELECT COALESCE(SUM(r.quantity),0)
-    FROM Resource r
-    """)
+    @Query("SELECT COALESCE(SUM(r.quantity), 0) FROM Resource r")
     Integer getTotalAvailableQuantity();
 }
