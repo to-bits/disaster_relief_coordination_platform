@@ -28,13 +28,8 @@ public class AuthController {
 
         UserResponse response = userService.registerUser(request);
 
-        ApiResponse<UserResponse> apiResponse = new ApiResponse<>(
-                true,
-                "User registered successfully",
-                response
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(HttpStatus.CREATED.value(), "User registered successfully", response));
     }
 
     @PostMapping("/login")
@@ -43,13 +38,7 @@ public class AuthController {
 
         LoginResponse response = userService.loginUser(request);
 
-        ApiResponse<LoginResponse> apiResponse = new ApiResponse<>(
-                true,
-                "Login successful",
-                response
-        );
-
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(ApiResponse.success("Login successful", response));
     }
 
     @PostMapping("/refresh")
@@ -58,12 +47,17 @@ public class AuthController {
 
         JwtAuthResponse response = userService.refreshToken(request);
 
-        ApiResponse<JwtAuthResponse> apiResponse = new ApiResponse<>(
-                true,
-                "Token refreshed successfully",
-                response
-        );
+        return ResponseEntity.ok(ApiResponse.success("Token refreshed successfully", response));
+    }
 
-        return ResponseEntity.ok(apiResponse);
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<String>> logout(
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+
+        if (authHeader != null && !authHeader.isBlank()) {
+            userService.logout(authHeader);
+        }
+
+        return ResponseEntity.ok(ApiResponse.success("Logged out successfully", "Token revoked"));
     }
 }

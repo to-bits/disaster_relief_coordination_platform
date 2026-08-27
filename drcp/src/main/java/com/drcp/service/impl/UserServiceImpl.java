@@ -15,6 +15,7 @@ import com.drcp.repository.RoleRepository;
 import com.drcp.repository.UserRepository;
 import com.drcp.security.CustomUserDetails;
 import com.drcp.security.JwtTokenProvider;
+import com.drcp.security.TokenBlacklistService;
 import com.drcp.service.interfaces.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     public UserResponse registerUser(RegisterRequest request) {
@@ -96,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public JwtAuthResponse refreshToken(RefreshTokenRequest request) {
         String token = request.getRefreshToken();
 
-        if (!jwtTokenProvider.validateToken(token)) {
+        if (!jwtTokenProvider.validateToken(token) || tokenBlacklistService.isBlacklisted(token)) {
             throw new BadRequestException("Invalid or expired refresh token");
         }
 
@@ -121,6 +124,20 @@ public class UserServiceImpl implements UserService {
                 .email(user.getEmail())
                 .roles(roles)
                 .build();
+    }
+
+    @Override
+    public void logout(String token) {
+        if (token == null || token.isBlank()) {
+            return;
+        }
+        String cleanToken = token.startsWith("Bearer ") ? token.substring(7) : token;
+        try {
+            Date expiry = jwtTokenProvider.getExpirationDateFromJwt(cleanToken);
+            tokenBlacklistService.blacklistToken(cleanToken, expiry);
+        } catch (Exception e) {
+            tokenBlacklistService.blacklistToken(cleanToken);
+        }
     }
 
     private UserResponse mapToResponse(User user) {

@@ -10,10 +10,10 @@ import lombok.*;
 @Builder
 public class VolunteerRequest {
 
-    @NotBlank
+    @NotBlank(message = "Skills are required")
     private String skills;
 
-    @NotBlank
+    @NotBlank(message = "Current location is required")
     private String currentLocation;
 
 }

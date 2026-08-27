@@ -1,5 +1,6 @@
 package com.drcp.exception;
 
+import com.drcp.payload.ApiResponse;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -8,179 +9,163 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiError> handleResourceNotFound(
+    public ResponseEntity<ApiResponse<Object>> handleResourceNotFound(
             ResourceNotFoundException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<ApiError> handleDuplicateResource(
+    public ResponseEntity<ApiResponse<Object>> handleDuplicateResource(
             DuplicateResourceException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiError> handleBadRequest(
+    public ResponseEntity<ApiResponse<Object>> handleBadRequest(
             BadRequestException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ApiError> handleUnauthorized(
+    public ResponseEntity<ApiResponse<Object>> handleUnauthorized(
             UnauthorizedException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.UNAUTHORIZED.value(),
-                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleValidationException(
+    public ResponseEntity<ApiResponse<Object>> handleValidationException(
             MethodArgumentNotValidException ex,
             HttpServletRequest request) {
 
-        String errors = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            fieldErrors.put(error.getField(), error.getDefaultMessage());
+        }
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.BAD_REQUEST.value(),
                 "Validation Failed",
-                errors,
-                request.getRequestURI()
+                fieldErrors
         );
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiError> handleBadCredentials(
+    public ResponseEntity<ApiResponse<Object>> handleBadCredentials(
             BadCredentialsException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.UNAUTHORIZED.value(),
-                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-                "Invalid email or password",
-                request.getRequestURI()
+                "Invalid email or password"
         );
 
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ApiError> handleAuthenticationException(
+    public ResponseEntity<ApiResponse<Object>> handleAuthenticationException(
             AuthenticationException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.UNAUTHORIZED.value(),
-                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiError> handleAccessDenied(
+    public ResponseEntity<ApiResponse<Object>> handleAccessDenied(
             AccessDeniedException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.FORBIDDEN.value(),
-                HttpStatus.FORBIDDEN.getReasonPhrase(),
-                "Access denied: insufficient permissions",
-                request.getRequestURI()
+                "Access denied: insufficient permissions"
         );
 
-        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(JwtException.class)
-    public ResponseEntity<ApiError> handleJwtException(
+    public ResponseEntity<ApiResponse<Object>> handleJwtException(
             JwtException ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.UNAUTHORIZED.value(),
-                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-                "Invalid or expired token: " + ex.getMessage(),
-                request.getRequestURI()
+                "Invalid or expired token: " + ex.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex,
+            HttpServletRequest request) {
+
+        ApiResponse<Object> response = ApiResponse.error(
+                HttpStatus.METHOD_NOT_ALLOWED.value(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handleGlobalException(
+    public ResponseEntity<ApiResponse<Object>> handleGlobalException(
             Exception ex,
             HttpServletRequest request) {
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
+        ApiResponse<Object> response = ApiResponse.error(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
+                ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred"
         );
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

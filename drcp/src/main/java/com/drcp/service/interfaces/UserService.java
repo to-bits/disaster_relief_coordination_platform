@@ -15,4 +15,6 @@ public interface UserService {
     LoginResponse loginUser(LoginRequest request);
 
     JwtAuthResponse refreshToken(RefreshTokenRequest request);
+
+    void logout(String token);
 }

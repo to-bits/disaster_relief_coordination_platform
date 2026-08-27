@@ -1,5 +1,6 @@
 package com.drcp.dto.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -10,19 +11,20 @@ import lombok.*;
 @Builder
 public class ReliefDistributionRequest {
 
-    @NotNull
+    @NotNull(message = "Relief request ID is required")
     private Long reliefRequestId;
 
-    @NotNull
+    @NotNull(message = "Resource ID is required")
     private Long resourceId;
 
-    @NotNull
+    @NotNull(message = "Volunteer ID is required")
     private Long volunteerId;
 
-    @NotNull
+    @NotNull(message = "Disaster ID is required")
     private Long disasterId;
 
-    @NotNull
+    @NotNull(message = "Distributed quantity is required")
+    @Min(value = 1, message = "Distributed quantity must be at least 1")
     private Integer distributedQuantity;
 
 }

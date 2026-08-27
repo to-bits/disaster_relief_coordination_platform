@@ -12,21 +12,21 @@ import lombok.*;
 @Builder
 public class DonationRequest {
 
-    @NotNull
+    @NotNull(message = "Donor ID is required")
     private Long donorId;
 
-    @NotNull
+    @NotNull(message = "Disaster ID is required")
     private Long disasterId;
 
-    @NotNull
+    @NotNull(message = "Resource ID is required")
     private Long resourceId;
 
-    @NotNull
-    @Min(1)
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
     private Integer quantity;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Estimated value is required")
+    @Min(value = 0, message = "Estimated value cannot be negative")
     private Double estimatedValue;
 
     private String remarks;

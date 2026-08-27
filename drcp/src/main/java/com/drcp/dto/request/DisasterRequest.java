@@ -1,6 +1,7 @@
 package com.drcp.dto.request;
 
 import com.drcp.entity.enums.DisasterType;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,15 +13,15 @@ import lombok.*;
 @Builder
 public class DisasterRequest {
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
     private String title;
 
     private String description;
 
-    @NotNull
+    @NotNull(message = "Disaster type is required")
     private DisasterType type;
 
-    @NotBlank
+    @NotBlank(message = "District is required")
     private String district;
 
     private String upazila;
@@ -29,6 +30,7 @@ public class DisasterRequest {
 
     private Double longitude;
 
+    @Min(value = 0, message = "Affected people count cannot be negative")
     private Integer affectedPeople;
 
 }
